@@ -58,11 +58,12 @@ fetch("https://api.zebedee.io/v0/charges", requestOptions)
 btn.innerHTML = "Open in Wallet for Direct Payment";
 btn.onclick = function () {
   window.location.href=`lightning:${myvalue}`;
-};
-document.body.appendChild(btn);
+    document.body.appendChild(btn);
 function touch(){
   window.location.href=`lightning:${myvalue}`;
 }
+};
+
 })
   })
 
