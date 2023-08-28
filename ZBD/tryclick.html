@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<head>
+<title>ZBD Rocks</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <form id="form" method="post">
+      <input type="number" id="sats" placeholder="Satoshis"/>
+      <input type="submit" value="Support"/>
+    </form>
+    <div id="result">
+    </div>
+    <div>
+    <center><button onclick="vayo()"><img src="" id="qrcode"></button></center>
+    </div>
+
+</body>
+<script>
+var myvalue;
+var form = document.getElementById('form')
+
+  form.addEventListener('submit',function(e){
+
+    e.preventDefault()
+
+    var sats = document.getElementById('sats').value
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+//apikey="Encrypted and Generated a random code"
+
+myHeaders.append("apikey", "h1WiYAlcc7OxVcejT5Q8sQBKbL8Hh0mo");
+var raw = JSON.stringify({
+  "expiresIn": 1000,
+  "amount": sats*1000,
+  "description": "Thank you!",
+  "internalId": "11af01d092444a317cb33faa6b8304b8",
+  "callbackUrl": "No URL"
+});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://api.zebedee.io/v0/charges", requestOptions)
+.then(response => response.json())
+//.then(result => console.log(result))
+.then((data)=>{
+  //console.log(data)
+  const myvalue= data.data.invoice.request;
+ var result = document.getElementById('result')
+  result.innerHTML = `<p><font size="5"> <b>The invoice is: </b>${myvalue}</font></p>`
+  var url = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=lightning:${myvalue}`;
+  qrcode.src=url;
+  function vayo()
+  {
+    window.location.href=`lightning:${myvalue}`;
+  };
+  let btn = document.createElement("button");
+btn.innerHTML = "Open in Wallet for Direct Payment";
+btn.onclick = function () {
+  window.location.href=`lightning:${myvalue}`;
+};
+document.body.appendChild(btn);
+})
+  })
+
+</script>
+</html>
