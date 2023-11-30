@@ -208,7 +208,7 @@ footer{
         width: 55vw;
     }
     .home{
-        height: 40vh;
+        height: 40vmax;
         background-image: linear-gradient(to right, rgb(243, 189, 183), salmon);
         display: flex;
     }
